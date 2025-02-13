@@ -1,4 +1,4 @@
-# Lab 4 - Morphological Image Processing - Logbook
+# Lab 4 | Morphological Image Processing | 06/02/2025 | Notes
 
 ## 1. Erosion and Dilation
 ### Dilation
