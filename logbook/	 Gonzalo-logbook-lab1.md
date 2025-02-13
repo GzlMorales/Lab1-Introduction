@@ -1,4 +1,4 @@
-# Image Transformations: Rotation and Shearing
+# Lab 1 | Image Transformations: Rotation and Shearing | 16/01/2025 | Notes
 
 ## Task 1: Image rotation
 
