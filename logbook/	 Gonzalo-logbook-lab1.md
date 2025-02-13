@@ -1,4 +1,4 @@
-# Lab 1 | Image Transformations: Rotation and Shearing | 16/01/2025 | Notes
+# Lab 1 | Introduction to MATLAB - Image rotation & shearing | 16/01/2025 | Notes
 
 ## Task 1: Image rotation
 
