@@ -1,5 +1,7 @@
 # Lab 4 | Morphological Image Processing | 06/02/2025 | Notes
 
+> Please note: notes and learnings on the operations carried out can be found in the  comments within the code snippets. This is done this way to interrupt the code as little as possible while having a synchronized view of the learnings and reflections. 
+
 ## 1. Erosion and Dilation
 ### Dilation
 
@@ -14,14 +16,14 @@ B1 = [0 1 0;
 A1 = imdilate(A, B1); % dilating returns a foreground value (i.e., 1), if ANY of the pixels within the B1 overlay are white. 
 montage({A,A1})
 ```
-
+![s18383302132025](https://a.okmd.dev/md/67ae3c2b62399.png)
 
 ```matlab
 B2 = ones(3,3); % create structuring element of type B I.
 A2 = imdilate(A, B2); % dilating returns a foreground value (i.e., 1), if ANY of the pixels within the B2 overlay are white. 
 montage({A,A2})
 ```
-
+![s18384402132025](https://a.okmd.dev/md/67ae3c34e306a.png)
 
 ```matlab
 Bx = [1 0 1;
@@ -30,14 +32,14 @@ Bx = [1 0 1;
 Ax = imdilate(A, Bx); % dilating returns a foreground value (i.e., 1), if ANY of the pixels within the Bx overlay are white. 
 montage({A,Ax})
 ```
-
+![s18385602132025](https://a.okmd.dev/md/67ae3c4244ace.png)
 
 ```matlab
 % Applying the morphological operator twice will further thicken it:
 A1_2 = imdilate(A1, B1); % Dilating the already dilated image,
 montage({A,A1_2})
 ```
-
+![s18391702132025](https://a.okmd.dev/md/67ae3c562f689.png)
 
 
 ### Creating Structuring Element with the Strel Function
@@ -61,6 +63,7 @@ E10 = imerode(A,SE10);
 E20 = imerode(A,SE20);
 montage({A, E2, E10, E20}, "size", [2 2]) % We can see the foreground (white) gets smaller as the size of the structuring element with which we erode gets bigger.
 ```
+![s18394002132025](https://a.okmd.dev/md/67ae3c6d816d5.png)
 
 ## 2. Opening Operation: Erosion + Dilation
 
@@ -73,11 +76,15 @@ fed = imdilate(fe,SE); % dilate the already eroded image, i.e., open f.
 fo = imopen(f, SE); % open f using the built-in function.
 
 % montage({f, fe, fed, fo}, "size", [2 2]) % Note how fed and fo are the same, since it the same operation!
+```
+![s18402002132025](https://a.okmd.dev/md/67ae3c9661846.png)
+
+```matlab
 
 foc = imclose(fo, SE);
 montage({f, fo, foc}, "size", [2 2]) % Note how the close operation "closes" those small gaps in between, since it starts with a dilation operation and then erodes.
 ```
-
+![s18403002132025](https://a.okmd.dev/md/67ae3ca00fcb5.png)
 
 ```matlab
 % compare it with a gaussian operation
@@ -85,6 +92,7 @@ w_gauss = fspecial('Gaussian', [20 20], 0.5); % Gaussian filter, with sigma = 0.
 g_gauss = imfilter(f, w_gauss, 0);
 montage({f, fo, foc, g_gauss}) % the gaussian spatial filter also manages to remove the noise if we make the kernell big enough in size, but it also loses the sharpness of the fingerprint's geometry.
 ```
+![s18403802132025](https://a.okmd.dev/md/67ae3ca852753.png)
 
 ## 3. Edge Detection and Grayscale Images
 
@@ -99,6 +107,7 @@ BW = imbinarize(I, level); % binarize image, i.e., it becomes 0s and 1s.
 
 montage({I, BW}) % see result
 ```
+![s18405002132025](https://a.okmd.dev/md/67ae3cb364bdf.png)
 
 
 ```matlab
@@ -111,6 +120,7 @@ BW_boundary = BW - BW_eroded;
 montage({I, BW, BW_eroded, BW_boundary}); % See how it detects the edges of the holes! Those edges are shown with the thickness of the amount eroded by the previous operation, which in turn is determined by the size of the structuring element. Note how the erode operation made the holes smaller. This is why, when we subtract this from the original BW, it shows the edges.
 
 ```
+![s18410002132025](https://a.okmd.dev/md/67ae3cbe6b89f.png)
 
 ## 4. Thinning with bwmorph
 
@@ -128,22 +138,25 @@ f_bw = imbinarize(f_i, level); % binarize image, i.e., it becomes 0s and 1s.
 
 montage({f, f_bw}) % see result
 ```
-
+![s18411002132025](https://a.okmd.dev/md/67ae3cc807aeb.png)
 
 ```matlab
 % Perform thinning operations using the bmorph function
 
 g1 = bwmorph(f_bw, 'thin');
 
-% montage({f_bw, g1}) % see result. Notice how now the lines in the fingerprint are thinner and more easily distinguishable.
+montage({f_bw, g1}) % see result. Notice how now the lines in the fingerprint are thinner and more easily distinguishable.
+```
+![s18414502132025](https://a.okmd.dev/md/67ae3ceab7ae2.png)
 
+```matlab
 g2 = bwmorph(f_bw, 'thin', 2);
 g3 = bwmorph(f_bw, 'thin', 3);
 g4 = bwmorph(f_bw, 'thin', 4);
 
 montage({g1, g2, g3, g4}, 'size', [2 2]) % see result. Notice how these lines get progressively thinner as we apply the operation iteratively. g4 is losing too much detail. There's an optimal level of processing and we need to gauge that for each image.
 ```
-
+![s18415302132025](https://a.okmd.dev/md/67ae3cf2ad8ea.png)
 
 ```matlab
 % if i keep thinning the image, it will reach a stable point where we can
@@ -151,7 +164,7 @@ montage({g1, g2, g3, g4}, 'size', [2 2]) % see result. Notice how these lines ge
 ginf = bwmorph(f_bw, 'thin', inf);
 montage({f_bw, ginf}) % see result. We can see that thickenning is the morphological dual of thinning: if % we use the image with a black fingerprint on a white background, and perform a thickening operation, the % result should do the same the shape as thinning the image with a white fingerprint over a black % background (only inverted).
 ```
-
+![s18420402132025](https://a.okmd.dev/md/67ae3cfd042b3.png)
 
 ```matlab
 level_2 = graythresh(f);
@@ -162,7 +175,7 @@ g1_2 = bwmorph(f_bw_2, 'thicken');
 montage({g1, g1_2}) % see result. Same result regarding shape! Only
 % inverted
 ```
-
+![s18421802132025](https://a.okmd.dev/md/67ae3d0aca365.png)
 
 ```matlab
 ginf_2 = bwmorph(f_bw_2, "thicken", inf);
@@ -171,6 +184,7 @@ montage({ginf, ginf_2}) % see result. Same result regarding shape! Only
 % inverted. It is actually a bit easier to see the result over a white
 % background.
 ```
+![s18422702132025](https://a.okmd.dev/md/67ae3d14073e4.png)
 
 ## 5. Connected components
 
@@ -203,6 +217,8 @@ figure
 imshow(t)
 ```
 
+![s18424202132025](https://a.okmd.dev/md/67ae3d2353efb.png)
+
 ## 6. Morphological reconstruction
 
 It's a method than can allow for recovering the details that an opening/closing operation has lost as we eroded and then dilated or viceversa. However, for that, we need to provide a marker image, to indicate where the shape we want to reconstruct is, a mask to indicate those shapes, and a structuring element.
@@ -221,18 +237,23 @@ fo = imopen(f, se); % perform open to compare - since 'open' starts with an
 fr = imreconstruct(g, f); % Now we can reconstruct those characters that survived using the original image f as a mask. 
 montage({f, g, fo, fr}, "size", [2 2])
 ```
-
+![s18425602132025](https://a.okmd.dev/md/67ae3d31c5f4f.png)
 
 ```matlab
 % What if we reconstruct based on the opened image, instead of the eroded?
 fr_2 = imreconstruct(fo, f); % Now we can reconstruct those characters that survived using the original image f as a mask.
 % montage({g, fo, fr, fr_2}, "size", [2 2]) % we can see that the result is the same, since the marker image indicates the same positions for those elements!!
+```
+![s18430902132025](https://a.okmd.dev/md/67ae3d3eb1496.png)
 
+```matlab
 % Testing MATLAB's imfill function to fill the holes in the image
 ff = imfill(f);
 figure
 montage({f, ff}) % It fills the holes within the characters. 
 ```
+
+![s18433402132025](https://a.okmd.dev/md/67ae3d5873328.png)
 
 ## 7. Working with a grayscale image and grayscale operations
 
@@ -252,6 +273,8 @@ gg = gd - ge; % edge detection subtracting the dilated result minus the
 
 montage({f, gd, ge, gg}, 'size', [2 2])
 ```
+
+![s18440602132025](https://a.okmd.dev/md/67ae3d7785cba.png)
 
 ## Challenges
 
@@ -282,6 +305,8 @@ num_cavities = CC.NumObjects
 cavity_size = cellfun(@numel, CC.PixelIdxList) 
 ```
 
+![s18443002132025](https://a.okmd.dev/md/67ae3d8fe2e23.png)
+
 Option #2: Using grayscale dilation instead of gaussian filtering to remove noise. 
 
 
@@ -307,6 +332,8 @@ num_cavities = CC.NumObjects
 
 cavity_size = cellfun(@numel, CC.PixelIdxList) 
 ```
+
+![s18444002132025](https://a.okmd.dev/md/67ae3d99d0b42.png)
 
 ### 2. Extracting Main Palm Features
 
@@ -334,6 +361,8 @@ se = ones(size,size); % structuring element for the morphological operation.
 fc = imclose(bw, se);
 montage({f, ge, bw, fc}, "size", [2 2]) % Note how the close operation "closes" those small gaps in between.
 ```
+
+![s18445102132025](https://a.okmd.dev/md/67ae3da5222fd.png)
 
 ### 3. Counting Red Blood Cells
 The following two methods count blood cells that are entirely in the frame, either by:
@@ -368,13 +397,15 @@ CC = bwconncomp(holes);
 num_holes = CC.NumObjects
 ```
 
+![s18450102132025](https://a.okmd.dev/md/67ae3daf8c16f.png)
+
 Using imclearborder
 ```matlab
 clear all; close all;
 f = imread('assets/normal-blood.png');
 g = im2gray(f);
 i = imcomplement(g);
-% imshow(f); % See output 
+% imshow(f); % See output ![![alt text](image-1.png)](image.png)
 
 level = graythresh(i); % finds the threshold that will binarize the image best, i.e., the value that would divide it into two groups of pixels ('light ones' and 'dark ones') within which the variance of luminosity would be minimized.
 bw = imbinarize(i, level); % binarize image, i.e., it becomes 0s and 1s.
@@ -394,3 +425,4 @@ num_holes = CC.NumObjects
 
 montage({f, bwc, clear_border}) % see output.
 ```
+![s18450902132025](https://a.okmd.dev/md/67ae3db7dac05.png)
