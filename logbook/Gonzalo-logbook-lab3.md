@@ -1,4 +1,4 @@
-# Lab 3 - Intensity transforms & Spatial filters 
+# Lab 3 | Intensity transforms & Spatial filters | 30/01/2025 | Notes
 
 ## Task 1
 
