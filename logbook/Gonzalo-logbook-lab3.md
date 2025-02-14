@@ -281,5 +281,5 @@ noise_reduced = cat(3, R_filt, G_filt, B_filt);
 montage({f, equalized, manual_hist_remap, noise_reduced});
 ```
 
-![s12431502142025](../img/s12475702142025.png)
+![s12431502142025](img/s12475702142025.png)
 
