@@ -1,5 +1,7 @@
 # Lab 2 | Colour and Perception | 23/01/2025 | Notes
 
+> Please note: notes and learnings on the operations carried out can often be found in the comments within the code snippets. This is done this way to enable for as little code snippet interruptions as possible, while keeping a synchronized view of the learnings and reflections. 
+
 ## Task 1: Comments
 Our blind spot exists because in that region of our eye, instead of photoreceptors, we have the optic nerve coming out of the eyeball. What’s interesting is that we do not notice such a blind spot because our brain interpolates or guesses what should be in that blind region by looking at what is around it. This way, it can trick us into thinking we are actually receiving visual information from that region when it is actually made up and based on inference.
 

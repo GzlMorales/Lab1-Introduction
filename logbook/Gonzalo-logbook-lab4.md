@@ -1,6 +1,6 @@
 # Lab 4 | Morphological Image Processing | 06/02/2025 | Notes
 
-> Please note: notes and learnings on the operations carried out can be found in the  comments within the code snippets. This is done this way to interrupt the code as little as possible while having a synchronized view of the learnings and reflections. 
+> Please note: notes and learnings on the operations carried out can often be found in the comments within the code snippets. This is done this way to enable for as little code snippet interruptions as possible, while keeping a synchronized view of the learnings and reflections. 
 
 ## 1. Erosion and Dilation
 ### Dilation

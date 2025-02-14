@@ -1,5 +1,7 @@
 # Lab 3 | Intensity transforms & Spatial filters | 30/01/2025 | Notes
 
+> Please note: notes and learnings on the operations carried out can often be found in the comments within the code snippets. This is done this way to enable for as little code snippet interruptions as possible, while keeping a synchronized view of the learnings and reflections. 
+
 ## Task 1: Contrast enhancement with function imadjust
 
 ```matlab
