@@ -31,27 +31,49 @@ This is an example of the Gestalt principle of continuation. When we perceive an
 
 ---
 
-## Tasks 9-13 (MATLAB Code)
+## Task 10: Convert RGB image into grayscale
 
 ```matlab
 imfinfo('peppers.png')
 RGB = imread('peppers.png');  
 imshow(RGB)
-
-I = rgb2gray(RGB);
+I = rgb2gray(RGB);  % converts the rgb image into grayscale
 figure              % start a new figure window
-imshow(I)
+imshow(I)              
 
-imshowpair(RGB, I, 'montage')
+imshowpair(RGB, I, 'montage') % compare the original image (RGB) with the grayscale image.
 title('Original colour image (left) grayscale image (right)');
+```
+![s10241002142025](https://a.okmd.dev/md/67af19cd22f22.png)
 
+
+## Task 11: Splitting an RGB image into separate channels
+
+```matlab
 [R,G,B] = imsplit(RGB);
-montage({R, G, B},'Size',[1 3])
+montage({R, G, B},'Size',[1 3]) 
+```
+Note how the pixels look brighter (i.e., greater intensity) the more content of that specific color they have (e.g., if a pixel has a lot of red, it looks very bright in the red channel preview). 
 
+![s10164302142025](https://a.okmd.dev/md/67af180d855b3.png)
+
+# Task 12: Map RGB image to HSV space and into separate channels
+```matlab
 HSV = rgb2hsv(RGB);
 [H,S,V] = imsplit(HSV);
 montage({H,S,V}, 'Size', [1 3])
+```
 
+![s10270002142025](https://a.okmd.dev/md/67af1a76d28e1.png)
+
+# Task 13: Map RGB image to XYZ space and into separate channels
+
+CIE (International Organisation on Illumination: 'Commission internationale de l'éclairage'), studied a lot the psychology of colors and mapped the colors on an XYZ space based on psychology.
+
+```matlab
 XYZ = rgb2xyz(RGB);
 [X,Y,Z] = imsplit(XYZ);
 montage({X,Y,Z}, 'Size', [1 3])
+```
+
+![s10311202142025](https://a.okmd.dev/md/67af1b734763c.png)
