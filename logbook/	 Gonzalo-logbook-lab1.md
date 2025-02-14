@@ -1,5 +1,12 @@
 # Lab 1 | Introduction to MATLAB - Image rotation & shearing | 16/01/2025 | Notes
 
+## Loading the test image:
+
+```matlab
+load clown
+greyscale_value = clown  (20,319); % We can see it returns the intensity value (greyscale) for the pixel in (20,319)
+```
+
 ## Task 1: Image rotation
 
 ```matlab
@@ -43,6 +50,9 @@ result = rotateImage(clown, 45);
 imshow(result);
 ```
 
+![s10041202142025](https://a.okmd.dev/md/67af151e48e1e.png)
+
+
 ## Task 2: Image shearing
 
 ```matlab
@@ -75,3 +85,4 @@ result = shearImage(clown, 1, 0);
 imshow(result);
 ```
 
+![s10042302142025](https://a.okmd.dev/md/67af15290ffcc.png)
