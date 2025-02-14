@@ -12,21 +12,39 @@ imshow(f)
 intensityPixel_3_10 = f(3,10)             % print the intensity of pixel(3,10)
 imshow(f(1:286,:))  % display only top half of the image - (571/2 = 285.5 ~= 286)
 
+```
+
+![s13070802142025](https://a.okmd.dev/md/67af3ffe73d16.png)
+
+```matlab
+
 [fmin, fmax] = bounds(f(:)) % get minimum and maximum values of intensity within the whole image
 % we get 21 to 255 -- close to the full range [0,255]
 
 figure  % open a new figure window
 imshow(f(:,241:482))  % display only right half of the image
+```
 
+![s13080302142025](https://a.okmd.dev/md/67af4035627da.png)
+
+```matlab
 g1 = imadjust(f, [0 1], [1 0]); % invert image: remaps the values in the intensity range, f, from min,max to max,min.
 figure                          % open a new figure window
 imshowpair(f, g1, 'montage', 'Scaling','none') % we use 'Scaling','none' to avoid the visuals from being normalized.
+
+```
+
+![s13084402142025](https://a.okmd.dev/md/67af405e3238e.png)
+
+```matlab
 
 g2 = imadjust(f, [0.5 0.75], [0 1]); % Remaps values within the 0.5-0.75 range to the extremes (0,1).
 g3 = imadjust(f, [ ], [ ], 2); % Applies gamma correction with value 2. This achieves similar results but preserves more details because g2 simply truncated the histogram.
 figure
 montage({g2,g3})
 ```
+
+![s13092002142025](https://a.okmd.dev/md/67af4081e89bd.png)
 
 ## Task 2: Contrast-stretching transformation
 
@@ -42,6 +60,8 @@ g = uint8(255*s);
 imshowpair(f, g, "montage")
 ```
 
+![s13112402142025](https://a.okmd.dev/md/67af40fef1a9d.png)
+
 ## Task 3: Contrast Enhancement using Histogram
 
 ```matlab
@@ -52,11 +72,24 @@ imshow(f)
 figure          % open a new figure window
 imhist(f);      % calculate and plot the histogram
 
+```
+
+![s13173002142025](https://a.okmd.dev/md/67af426c2a061.png)
+
+```matlab
+
 close all
 g=imadjust(f,[0.3 0.55]); % remap and stretch histogram in the 0.3-0.55 range.
 montage({f, g})     % display list of images side-by-side
 figure
 imhist(g);
+
+```
+
+![s13180902142025](https://a.okmd.dev/md/67af4292d7af8.png)
+
+
+```matlab
 
 % Let's normalize the histogram
 close all                       
@@ -69,6 +102,13 @@ subplot(1,2,2)                  % Makes space for plot 2 in a 1x2 subplot
 plot(g_cdf)                     % Plots the CDF
 
 % The CDF is the function used as the intensity transformation function.
+
+```
+
+![s13191102142025](https://a.okmd.dev/md/67af42d1452d9.png)
+
+
+```matlab
 
 x = linspace(0, 1, 256);    % x has 256 values equally spaced between 0 and 1
 figure
@@ -93,6 +133,7 @@ subplot(1,3,1); imhist(f);
 subplot(1,3,2); imhist(g);
 subplot(1,3,3); imhist(h);
 ```
+![s13205402142025](img/s13205402142025.png)
 
 ## Task 4: Noise reduction with lowpass filter
 
@@ -119,6 +160,8 @@ montage({f, g_box, g_gauss})
 % changes better by assigning greater weights to the pixels that are closer
 % to the pixel in question.
 ```
+![s13205402142025](img/s13223602142025.png)
+
 
 ## Task 5: Median filtering
 
@@ -132,6 +175,8 @@ figure; montage({f, g_median})
 % them by value. Then we take the middle one. In other words: we find the pixel
 % with the median value in that neighborhood, and we output that value!
 ```
+
+![s13230202142025](https://a.okmd.dev/md/67af43b829433.png)
 
 ## Task 6: Sharpening the image with Laplacian, Sobel and Unsharp filters
 
@@ -261,6 +306,7 @@ The result is better exposed, but too low contrast. We might want to try with a 
 manual_hist_remap = imadjust(f, [0.1 0.65], [0 1]);
 
 ````
+![s13043902142025](https://a.okmd.dev/md/67af3f6a843e0.png)
 
 The result is much better. But we can make it even better if we reduce the noise using a median filter.
 
